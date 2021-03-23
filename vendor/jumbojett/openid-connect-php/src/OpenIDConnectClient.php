@@ -369,8 +369,8 @@ class OpenIDConnectClient
             $id_token = $_REQUEST['id_token'];
 
             $accessToken = null;
-            if (isset($_REQUEST['access_token'])) {
-                $accessToken = $_REQUEST['access_token'];
+            if (isset($_REQUEST['id_token'])) {
+                $accessToken = $_REQUEST['id_token'];
             }
 
             // Do an OpenID Connect session check
@@ -442,11 +442,11 @@ class OpenIDConnectClient
 
         $signout_params = null;
         if($redirect === null){
-            $signout_params = array('id_token_hint' => $accessToken);
+            $signout_params = array('id_token_hint' => $idToken);
         }
         else {
             $signout_params = array(
-                'id_token_hint' => $accessToken,
+                'id_token_hint' => $idToken,
                 'post_logout_redirect_uri' => $redirect);
         }
 
@@ -652,7 +652,7 @@ class OpenIDConnectClient
 
         // If the client has been registered with additional scopes
         if (count($this->scopes) > 0) {
-            $auth_params = array_merge($auth_params, array('scope' => implode(' ', array_merge($this->scopes, array('openid', 'email', 'profile','openid ndid')))));
+            $auth_params = array_merge($auth_params, array('scope' => implode(' ', array_merge($this->scopes, array('openid', 'email', 'profile')))));
         }
 
         // If the client has been registered with additional response types
